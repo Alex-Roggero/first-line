@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIRST LINE — AI-Powered Cold Call Opener Builder by Alex Roggero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fog:#E9EDF2; --ink:#0B1F33; --ink2:#13304D; --mint:#19E0B8; --coral:#FF5A48;
+  --amber:#FFC34D; --paper:#FFFFFF; --line:#C9D3DE; --mut:#5B6B7C;
+  --mono:'IBM Plex Mono',monospace; --body:'IBM Plex Sans',sans-serif; --disp:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--fog);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;min-height:100vh;-webkit-text-size-adjust:100%}
+::selection{background:var(--mint);color:var(--ink)}
+
+/* ---------- header ---------- */
+header{background:var(--ink);color:#fff;padding:0 28px}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;gap:12px}
+.brand{font-family:var(--mono);font-weight:600;font-size:18px;letter-spacing:.04em;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.brand .dot{width:10px;height:10px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.brand .cur{display:inline-block;width:9px;height:18px;background:var(--mint);animation:blink 1.1s steps(1) infinite;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+.tag{font-family:var(--mono);font-size:11.5px;color:#8FA3B8;letter-spacing:.03em;display:none}
+@media(min-width:700px){.tag{display:block}}
+/* langs moved to setup card */
+@keyframes poke{0%,100%{transform:translateX(0) scale(1);opacity:1}50%{transform:translateX(-4px) scale(1.15);opacity:.6}}
+.langs{display:flex;flex-direction:row;flex-wrap:nowrap;gap:20px;justify-content:center}
+.langs button{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;background:#FBFCFD;border:1.5px solid var(--line);color:var(--mut);padding:10px 18px;cursor:pointer;border-radius:99px;transition:all .15s;min-width:58px;text-align:center}
+.langs button:hover{border-color:var(--ink);color:var(--ink)}
+.langs button.on{background:var(--ink);border-color:var(--ink);color:var(--mint);font-weight:700}
+.langs button:hover{border-color:var(--ink);color:var(--ink)}
+.langs button.on{background:var(--ink);border-color:var(--ink);color:var(--mint);font-weight:600}
+
+/* ---------- layout ---------- */
+main{max-width:940px;margin:0 auto;padding:34px 24px 70px;display:flex;flex-direction:column;gap:22px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.fgrid .field{margin-bottom:0}
+.f-offer{grid-column:1/-1}
+.f-row2{display:contents}
+.f-ct{grid-column:1/-1}
+@media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr}.f-offer,.f-persona,.f-trigger,.f-ct{grid-column:1/-1}}
+@media(max-width:520px){.fgrid{grid-template-columns:1fr}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:26px 28px}
+.card h2{font-family:var(--disp);font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.sub{font-size:13px;color:var(--mut);margin-bottom:18px}
+.kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:6px;display:block}
+
+/* ---------- fields ---------- */
+/* ---------- linkedin research bar ---------- */
+.libar{margin-bottom:22px}
+.libar-row{display:flex;gap:10px;align-items:center}
+.libar-in{flex:1;min-width:0;display:flex;align-items:center;border:2px solid var(--line);border-radius:8px;background:#FBFCFD;padding:0 14px;transition:border .2s}
+.libar-in:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px rgba(11,31,51,.08)}
+.li-icon{flex:0 0 20px;margin-right:10px}
+.libar-in input{flex:1;min-width:0;border:none;background:transparent;font-family:var(--body);font-size:15px;color:var(--ink);padding:13px 0;outline:none}
+.libar-in input::placeholder{color:var(--mut)}
+#researchBtn{flex:0 0 auto;background:linear-gradient(135deg,#FF6B45,#E8533A);color:#fff;border:none;border-radius:8px;padding:13px 24px;font-family:var(--disp);font-size:16px;font-weight:700;letter-spacing:.02em;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.18s;white-space:nowrap}
+#researchBtn:hover:not(:disabled){box-shadow:0 4px 14px rgba(255,107,69,.4);transform:translateY(-1px)}
+#researchBtn:disabled{opacity:.6;cursor:wait}
+#websiteBtn{flex:0 0 auto;background:#07c8c0;color:var(--ink);border:none;border-radius:8px;padding:13px 22px;font-family:var(--disp);font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.18s;white-space:nowrap}
+#websiteBtn:hover:not(:disabled){box-shadow:0 4px 14px rgba(7,200,192,.35);background:#05b0a8}
+#websiteBtn:disabled{opacity:.6;cursor:wait}
+#websiteBtn .ring{width:14px;height:14px;border:2px solid var(--mint);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:none}
+#websiteBtn.busy .ring{display:block}
+#researchBtn .ring{width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:none}
+#researchBtn.busy .ring{display:block}
+.step-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px;font-weight:600}
+.step-label .num{background:var(--ink);color:var(--mint);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex:0 0 22px}
+.libar-sub{font-family:var(--mono);font-size:10.5px;color:var(--mut);margin-top:8px}
+.or-divider{display:flex;align-items:center;gap:14px;margin:18px 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--line)}
+.insights{background:linear-gradient(135deg,#F0F9FF,#E8F4FD);border:1px solid #B8DDFB;border-left:4px solid #0A66C2;border-radius:6px;padding:16px 18px;margin-bottom:18px}
+.ins-head{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#0A66C2;margin-bottom:10px}
+#insBody{font-size:13.5px;line-height:1.6;color:var(--ink2)}
+#insBody strong{color:var(--ink)}
+@media(max-width:640px){
+  .libar-row{flex-direction:column;gap:8px}
+  #researchBtn{width:100%;padding:10px 14px;justify-content:center;min-height:42px;font-size:14px}
+  .insights{padding:14px}
+}
+.field{margin-bottom:16px}
+label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:6px;font-weight:500}
+input[type=text],textarea,select{width:100%;border:1px solid var(--line);border-radius:5px;background:#FBFCFD;padding:10px 12px;font-family:var(--body);font-size:15px;color:var(--ink);transition:border .15s;-webkit-appearance:none;appearance:none}
+select{padding-right:34px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%235B6B7C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(11,31,51,.08)}
+textarea{resize:vertical;min-height:74px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.row2{grid-template-columns:1fr}}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1px solid var(--line);border-radius:99px;background:#FBFCFD;padding:9px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;cursor:pointer;color:var(--mut);transition:.15s;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.seg button::before{content:'';width:8px;height:8px;border-radius:50%;border:1.5px solid var(--mut);flex:0 0 8px;transition:.15s}
+.seg button.on{background:var(--ink);color:var(--mint);border-color:var(--ink);font-weight:600}
+.seg button.on::before{background:var(--mint);border-color:var(--mint)}
+
+/* ---------- opener box ---------- */
+#opener{min-height:120px;font-size:15.5px;line-height:1.6}
+.openrow{display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap}
+#micBtn{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 46px;transition:.15s}
+#micBtn svg{width:20px;height:20px;fill:var(--ink)}
+#micBtn.rec{background:var(--coral);border-color:var(--coral);animation:pulse 1.2s infinite}
+#micBtn.rec svg{fill:#fff}
+#micBtn:disabled{opacity:.35;cursor:not-allowed}
+#callBtn{flex:1;min-width:200px;background:var(--ink);color:#fff;border:none;border-radius:6px;padding:14px 20px;font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.01em;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center;gap:10px}
+#callBtn:hover:not(:disabled){background:var(--ink2);box-shadow:0 4px 18px rgba(11,31,51,.28)}
+#callBtn:disabled{opacity:.6;cursor:wait}
+#callBtn .ring{width:14px;height:14px;border:2px solid var(--mint);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:none}
+#callBtn.busy .ring{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.warn{font-family:var(--mono);font-size:12px;color:var(--coral);margin-top:10px;display:none}
+.micnote{font-family:var(--mono);font-size:10.5px;color:var(--mut)}
+
+/* ---------- results ---------- */
+#results{display:none}
+.scorecard{background:var(--ink);border-radius:8px;color:#fff;padding:26px 26px 18px;position:relative;overflow:hidden}
+.scorecard::before{content:'';position:absolute;inset:0;background-image:linear-gradient(#1A3A5C 1px,transparent 1px),linear-gradient(90deg,#1A3A5C 1px,transparent 1px);background-size:34px 34px;opacity:.25;pointer-events:none}
+.scoregrid{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:center;position:relative}
+@media(max-width:760px){.scoregrid{grid-template-columns:1fr}}
+.gaugewrap{text-align:center}
+#gauge{max-width:100%;height:auto}
+.bignum{font-family:var(--mono);font-weight:600;font-size:54px;line-height:1;margin-top:-8px}
+.bignum small{font-size:18px;color:#7E94AA}
+.verdict{font-family:var(--disp);font-size:21px;font-weight:700;line-height:1.3;margin-bottom:10px}
+.moodchip{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid #2C4763;color:#9FB4C9;padding:4px 9px;border-radius:99px;margin-bottom:12px}
+.moodfx{font-size:13px;color:#AFC2D4}
+.transcript{margin-top:18px;background:#0F2741;border:1px solid #1F3D5C;border-radius:6px;padding:16px 18px;position:relative}
+.transcript .who{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mint);margin-bottom:6px}
+.transcript p{font-size:15.5px;line-height:1.6;color:#EAF1F7;font-style:italic}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+@media(max-width:760px){.duo{grid-template-columns:1fr}}
+.fb{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:20px}
+.fb h3{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.fb.good h3{color:#0B8F73}.fb.bad h3{color:var(--coral)}
+.fb ul{list-style:none}
+.fb li{padding:7px 0 7px 24px;position:relative;font-size:13.5px;border-bottom:1px dashed var(--line)}
+.fb li:last-child{border-bottom:none}
+.fb.good li::before{content:'+';position:absolute;left:2px;font-family:var(--mono);font-weight:600;color:#0B8F73}
+.fb.bad li::before{content:'–';position:absolute;left:2px;font-family:var(--mono);font-weight:600;color:var(--coral)}
+
+.alts{margin-top:18px}
+.alts h3{font-family:var(--disp);font-size:17px;font-weight:700;margin-bottom:12px}
+.alt{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--mint);border-radius:6px;padding:16px 18px;margin-bottom:12px}
+.alt .atxt{font-size:14.5px;font-style:italic;margin-bottom:8px}
+.alt .awhy{font-size:12.5px;color:var(--mut);margin-bottom:10px}
+.alt button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:transparent;border:1px solid var(--ink);color:var(--ink);padding:6px 12px;border-radius:4px;cursor:pointer;transition:.15s}
+.alt button:hover{background:var(--ink);color:var(--mint)}
+
+#againBtn{margin-top:6px;width:100%;background:transparent;border:1.5px dashed var(--ink);color:var(--ink);border-radius:6px;padding:12px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.15s}
+#againBtn:hover{background:var(--ink);color:var(--mint);border-style:solid}
+
+/* ---------- history ---------- */
+.hist{margin-top:0}
+.hist h2{font-family:var(--disp);font-size:17px;font-weight:700;margin-bottom:10px}
+.hempty{font-family:var(--mono);font-size:12px;color:var(--mut)}
+.hitem{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}
+.hitem:last-child{border-bottom:none}
+.hscore{font-family:var(--mono);font-weight:600;font-size:13px;min-width:42px;text-align:center;border-radius:4px;padding:4px 0;color:#fff}
+.hz0{background:var(--coral)}.hz1{background:#E09A1F}.hz2{background:#0B8F73}
+.htxt{font-size:12.5px;color:var(--ink2);flex:1;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.errbox{display:none;margin-top:16px;background:#FFF0EE;border:1px solid var(--coral);border-radius:6px;padding:14px 16px;font-size:13.5px;color:#8C2318;font-family:var(--mono)}
+/* ---------- tips ---------- */
+.tips{cursor:default}
+.tips summary{font-family:var(--disp);font-size:18px;font-weight:700;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;user-select:none}
+.tips summary::-webkit-details-marker{display:none}
+.tips summary::before{content:'\25B6';font-size:11px;color:var(--mint);transition:transform .2s}
+.tips[open] summary::before{transform:rotate(90deg)}
+.tipsgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+@media(max-width:640px){.tipsgrid{grid-template-columns:1fr}}
+.tip{background:var(--fog);border-radius:6px;padding:14px 16px;border-left:3px solid var(--mint)}
+.tip .tn{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mint);margin-bottom:4px}
+.tip .tt{font-family:var(--disp);font-size:15px;font-weight:700;margin-bottom:6px}
+.tip .td{font-size:13px;color:var(--mut);line-height:1.5}
+.tip .tsrc{font-family:var(--mono);font-size:9.5px;color:var(--line);margin-top:6px}
+/* ---------- ko-fi fab ---------- */
+.kofi-fab{position:fixed;bottom:20px;right:20px;z-index:900;display:flex;align-items:center;gap:10px;background:#fff;color:var(--ink);text-decoration:none;font-family:var(--disp);font-size:15px;font-weight:700;letter-spacing:.01em;padding:10px 18px 10px 12px;border-radius:99px;border:2px solid #07c8c0;box-shadow:0 4px 20px rgba(7,200,192,.25),0 2px 6px rgba(0,0,0,.1);transition:all .25s;white-space:nowrap}
+.kofi-fab:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 8px 30px rgba(7,200,192,.4),0 3px 10px rgba(0,0,0,.12);border-color:#05b5ae}
+.kofi-cup{position:relative;width:36px;height:36px;flex:0 0 36px}
+.kofi-cup .cup{fill:#07c8c0}
+.kofi-cup .heart{fill:#FF6B45;animation:heartbeat 1.8s ease-in-out infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}}
+.kofi-cup .steam{fill:none;stroke:#07c8c0;stroke-width:1.5;stroke-linecap:round;opacity:.6}
+.kofi-cup .s1{animation:steam 2.2s ease-in-out infinite}
+.kofi-cup .s2{animation:steam 2.2s ease-in-out infinite .4s}
+.kofi-cup .s3{animation:steam 2.2s ease-in-out infinite .8s}
+@keyframes steam{0%{transform:translateY(0);opacity:.6}50%{transform:translateY(-6px);opacity:.2}100%{transform:translateY(-12px);opacity:0}}
+@media(max-width:640px){.kofi-fab span{display:none}.kofi-fab{padding:10px;border-radius:50%;width:56px;height:56px;justify-content:center}}
+@supports(bottom:env(safe-area-inset-bottom)){.kofi-fab{bottom:calc(20px + env(safe-area-inset-bottom))}}
+/* ---------- share & cta ---------- */
+.share-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.share-btn{flex:1;min-width:180px;background:var(--ink);color:#fff;border:none;border-radius:6px;padding:13px 18px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.18s}
+.share-btn:hover{background:var(--ink2);box-shadow:0 4px 14px rgba(11,31,51,.25)}
+.share-btn svg{width:16px;height:16px;fill:currentColor}
+.crono-cta{margin-top:20px;background:linear-gradient(135deg,#07c8c0,#05a8a2);border-radius:8px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.crono-cta-left{display:flex;align-items:flex-start;gap:14px}
+.crono-logo{flex:0 0 36px;margin-top:2px}
+.crono-cta-txt{color:#fff;font-family:var(--disp);font-size:17px;font-weight:700}
+.crono-cta-sub{color:rgba(255,255,255,.8);font-size:13px;font-family:var(--body);margin-top:2px;font-weight:400}
+.crono-cta a{background:#fff;color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:12px 24px;border-radius:6px;white-space:nowrap;transition:.18s}
+.crono-cta a:hover{box-shadow:0 4px 16px rgba(0,0,0,.2);transform:translateY(-1px)}
+@media(max-width:640px){.crono-cta{flex-direction:column;text-align:center;padding:18px 16px}.crono-cta a{width:100%;text-align:center;display:block}}
+/* ---------- share canvas (hidden) ---------- */
+#shareCanvas{display:none}
+/* ---------- build button ---------- */
+#buildBtn{width:100%;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:16px 24px;font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:.01em;cursor:pointer;transition:.18s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px}
+#buildBtn:hover:not(:disabled){background:var(--ink2);box-shadow:0 4px 18px rgba(11,31,51,.28)}
+#buildBtn:disabled{opacity:.6;cursor:wait}
+#buildBtn .ring{width:14px;height:14px;border:2px solid var(--mint);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;display:none}
+#buildBtn.busy .ring{display:block}
+/* ---------- opener cards ---------- */
+.opener-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:24px 26px;margin-bottom:16px;position:relative;overflow:hidden}
+.opener-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--mint)}
+.opener-num{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mint);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.opener-technique{display:inline-block;background:var(--ink);color:var(--mint);font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:3px 10px;border-radius:99px}
+.opener-text{font-size:16.5px;line-height:1.65;margin:12px 0;color:var(--ink);font-style:italic}
+.opener-why-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+.opener-why{font-size:14px;line-height:1.6;color:var(--ink2);margin-bottom:14px}
+.copy-btn{background:transparent;border:1.5px solid var(--ink);color:var(--ink);border-radius:6px;padding:10px 20px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:8px}
+.copy-btn:hover{background:var(--ink);color:var(--mint)}
+.copy-btn.copied{background:var(--mint);border-color:var(--mint);color:var(--ink)}
+.copy-btn svg{width:14px;height:14px;fill:currentColor}
+@media(max-width:640px){
+  .opener-card{padding:18px 16px}
+  .opener-text{font-size:15px}
+  .opener-why{font-size:13px}
+  #buildBtn{font-size:16px;padding:14px 18px}
+}
+footer{text-align:center;font-family:var(--mono);font-size:11px;color:var(--mut);padding:0 20px 40px}
+/* ---------- mobile ---------- */
+@media(max-width:640px){
+  body{font-size:14px}
+  header{padding:0 16px}
+  .hwrap{height:auto;padding:12px 0;row-gap:8px;flex-direction:column;align-items:center;flex-wrap:wrap}
+  .brand{font-size:16px}
+  .langs{gap:12px;flex-wrap:wrap;justify-content:center}
+  .langs button{padding:10px 16px;font-size:12px;min-height:42px}
+  .hand{display:none!important}
+  .langs button{padding:8px 10px;font-size:12px;min-height:40px}
+  main{padding:16px 12px 40px;gap:14px}
+  .card{padding:18px 14px;border-radius:8px}
+  .card h2{font-size:17px}
+  .sub{font-size:12.5px;margin-bottom:14px}
+  .kicker{font-size:9.5px}
+  .fgrid{gap:12px}
+  label{font-size:10px;margin-bottom:5px}
+  input[type=text],textarea,select{font-size:16px;padding:12px;border-radius:4px}
+  textarea{min-height:60px}
+  #opener{min-height:90px;font-size:15px}
+  .seg{gap:6px}
+  .seg button{padding:10px 12px;font-size:10px}
+  .openrow{flex-direction:column;gap:10px;margin-top:10px}
+  #micBtn{width:50px;height:50px;flex:0 0 50px;align-self:center}
+  #micBtn svg{width:22px;height:22px}
+  #callBtn{width:100%;min-width:0;padding:16px;font-size:15px;border-radius:8px;min-height:52px}
+  .micnote{text-align:center;font-size:10px}
+  .errbox{font-size:12px;padding:12px}
+  .scorecard{padding:18px 14px 14px;border-radius:6px}
+  .scoregrid{gap:14px}
+  .gaugewrap svg{width:220px;height:auto}
+  .bignum{font-size:40px;margin-top:-4px}
+  .bignum small{font-size:15px}
+  .moodchip{font-size:9px;padding:4px 8px}
+  .verdict{font-size:16px;margin-bottom:8px}
+  .moodfx{font-size:11.5px}
+  .transcript{padding:12px 14px;margin-top:14px}
+  .transcript p{font-size:14px}
+  .duo{margin-top:14px;gap:10px}
+  .fb{padding:14px;border-radius:6px}
+  .fb h3{font-size:10px;margin-bottom:8px}
+  .fb li{font-size:12.5px;padding:6px 0 6px 20px}
+  .alts{margin-top:14px}
+  .alts h3{font-size:15px;margin-bottom:8px}
+  .alt{padding:12px 14px;margin-bottom:10px;border-radius:4px}
+  .alt .atxt{font-size:13px}
+  .alt .awhy{font-size:11px}
+  .alt button{padding:8px 14px;font-size:10px;min-height:40px}
+  #againBtn{padding:14px;font-size:11px;min-height:48px}
+  .hist h2{font-size:15px}
+  .hitem{gap:8px;padding:8px 0}
+  .hscore{min-width:36px;font-size:12px}
+  .htxt{font-size:11.5px}
+  footer{font-size:9.5px;padding:0 12px 28px}
+}
+/* ---------- small phones ---------- */
+@media(max-width:380px){
+  main{padding:12px 8px 36px}
+  .card{padding:14px 12px}
+  .card h2{font-size:16px}
+  .bignum{font-size:34px}
+  .gaugewrap svg{width:180px}
+  .seg button{font-size:9px;padding:9px 10px}
+  .scorecard{padding:14px 12px 12px}
+}
+/* ---------- safe area for notched phones ---------- */
+@supports(padding-bottom:env(safe-area-inset-bottom)){
+  footer{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="brand"><span class="dot"></span>FIRST&nbsp;LINE<span class="cur"></span></div>
+    <div class="tag" id="tagline"></div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ SETUP ============ -->
+  <div class="card">
+    <div class="field" style="margin-bottom:20px">
+      <label id="l_lang" style="margin-bottom:8px"></label>
+      <div class="langs" id="langs"></div>
+    </div>
+
+    <span class="kicker" id="k_setup"></span>
+    <h2 id="t_setup"></h2>
+    <p class="sub" id="s_setup"></p>
+
+    <div class="libar">
+      <div class="step-label"><span class="num">1</span><span id="stepLi"></span></div>
+      <div class="libar-row">
+        <div class="libar-in">
+          <svg class="li-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="#0A66C2" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          <input type="text" id="liUrl" autocomplete="off" spellcheck="false">
+        </div>
+        <button id="researchBtn"><span class="ring" id="resRing"></span><span id="resLbl"></span></button>
+      </div>
+      <p class="libar-sub" id="liSub"></p>
+    </div>
+    <div class="insights" id="insights" style="display:none">
+      <div class="ins-head"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><span id="insTitle"></span></div>
+      <div id="insBody"></div>
+    </div>
+
+    <div class="or-divider" id="orDiv"></div>
+
+    <div class="step-label"><span class="num">2</span><span id="stepFields"></span></div>
+    <div class="fgrid">
+      <div class="field">
+        <label for="persona" id="l_persona"></label>
+        <input type="text" id="persona">
+      </div>
+      <div class="field">
+        <label for="trigger" id="l_trigger"></label>
+        <input type="text" id="trigger">
+      </div>
+      <div class="field">
+        <label for="industry" id="l_industry"></label>
+        <select id="industry"></select>
+      </div>
+      <div class="field">
+        <label for="size" id="l_size"></label>
+        <select id="size"></select>
+      </div>
+      <div class="field">
+        <label for="country" id="l_country"></label>
+        <select id="country"></select>
+      </div>
+      <div class="field f-ct">
+        <label id="l_ct"></label>
+        <div class="seg" id="ctSeg"></div>
+      </div>
+    </div>
+
+    <div class="offer-section">
+      <div class="field" style="margin-bottom:10px">
+        <label for="offer" id="l_offer"></label>
+        <textarea id="offer" style="min-height:90px"></textarea>
+      </div>
+      <div class="offer-or" id="offerOr"></div>
+      <div class="field" style="margin-bottom:0">
+        <label for="website" id="l_website"></label>
+        <div class="libar-row">
+          <div class="libar-in">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--mut)" stroke-width="2" stroke-linecap="round" style="flex:0 0 18px;margin-right:10px"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <input type="text" id="website" autocomplete="off" spellcheck="false" style="padding:13px 0">
+          </div>
+          <button id="websiteBtn"><span class="ring" id="webRing"></span><span id="webLbl"></span></button>
+        </div>
+        <p class="libar-sub" id="webSub"></p>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- ============ TIPS ============ -->
+    <details class="card tips" id="tipsCard">
+      <summary id="t_tips"></summary>
+      <div class="tipsgrid" id="tipsList"></div>
+    </details>
+  <!-- ============ BUILD ============ -->
+  <div class="card">
+    <div class="step-label"><span class="num">3</span><span id="stepBuild"></span></div>
+    <button id="buildBtn"><span class="ring" id="buildRing"></span><span id="buildLbl"></span></button>
+    <p class="warn" id="warn" style="display:none"></p>
+    <div class="errbox" id="errbox" style="display:none"></div>
+  </div>
+
+  <!-- ============ OPENERS RESULT ============ -->
+  <div id="openersResult" style="display:none">
+    <div id="openersList"></div>
+
+    <div class="crono-cta">
+      <div class="crono-cta-left">
+        <svg class="crono-logo" width="36" height="36" viewBox="0 0 700 700" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M593.749 304.088C593.749 309.366 592.299 314.645 589.374 319.376C513.645 442.468 448.759 532.392 349.99 651.204C340.527 662.57 327.45 663.33 318.367 660.263C309.261 657.196 299.346 648.66 298.728 633.919C296.052 571.087 294.833 508.27 295.632 445.403C295.768 434.692 287.101 425.926 276.389 425.971C229.153 426.17 181.923 425.688 134.692 424.874C123.969 424.683 114.482 418.953 109.37 409.585C104.282 400.289 104.567 389.351 110.131 380.316C185.859 257.248 250.746 167.3 349.515 48.4882C358.954 37.123 372.055 36.3621 381.138 39.4293C390.22 42.4965 400.159 51.0323 400.777 65.7739C403.453 128.623 404.675 191.458 403.873 254.343C403.737 265.033 412.371 273.792 423.063 273.764C470.326 273.639 517.575 274.01 564.837 274.843C575.56 275.033 585.023 280.739 590.135 290.107C592.56 294.53 593.749 299.309 593.749 304.088Z" fill="#fff"/></svg>
+        <div>
+          <div class="crono-cta-txt" id="ctaTxt"></div>
+          <div class="crono-cta-sub" id="ctaSub"></div>
+        </div>
+      </div>
+      <a href="https://www.crono.one/demo/?utm_source=firstline&utm_medium=tool&utm_campaign=cta" target="_blank" rel="noopener" id="ctaBtn"></a>
+    </div>
+  </div>
+</main>
+
+<footer>FIRST LINE · because 'Hi, how are you today?' is not a strategy · powered by Alex Roggero · <a href="https://github.com/Alex-Roggero/first-line" target="_blank" rel="noopener" style="color:var(--mint);text-decoration:none">⭐ Open Source on GitHub</a></footer>
+
+<a href="https://ko-fi.com/firstline" target="_blank" rel="noopener" class="kofi-fab" aria-label="Support First Line on Ko-fi">
+  <div class="kofi-cup">
+    <svg viewBox="0 0 36 36" width="36" height="36">
+      <!-- steam -->
+      <path class="steam s1" d="M12 10c0-3 2-4 0-7"/>
+      <path class="steam s2" d="M17 9c0-3 2-4 0-7"/>
+      <path class="steam s3" d="M22 10c0-3 2-4 0-7"/>
+      <!-- cup body -->
+      <path class="cup" d="M5 14h22l-2.5 16a3 3 0 0 1-3 2.5H10.5a3 3 0 0 1-3-2.5L5 14z"/>
+      <!-- cup handle -->
+      <path d="M27 16h2a3.5 3.5 0 0 1 0 7h-1.5" fill="none" stroke="#07c8c0" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- heart -->
+      <path class="heart" d="M16 20.8c-1.2-1.2-3.2-1.2-4.4 0-.6.6-.8 1.5-.5 2.3.5 1.5 2.5 3.5 4.9 5 2.4-1.5 4.4-3.5 4.9-5 .3-.8.1-1.7-.5-2.3-1.2-1.2-3.2-1.2-4.4 0z" transform="translate(0,-1)"/>
+    </svg>
+  </div>
+  <span>Buy us a coffee ☕</span>
+</a>
+
+<script>
+/* =================== I18N =================== */
+const LANGS=['en','it','es','fr','de'];
+const T={
+en:{tag:'The hardest part of a cold call is the first sentence.',k_setup:'Step 01 — Context',t_setup:'The setup',s_setup:'Tell the system who you are calling and what you sell. It will research, score, and suggest.',
+li_ph:'LinkedIn URL of the person you\'re about to call',li_btn:'Research',li_busy:'Researching…',li_ins:'Intel gathered',li_nourl:'Paste a LinkedIn URL first.',l_lang:'Choose your language',stepLi:'Paste your PROSPECT\'s LinkedIn URL',liSub:'Takes ~10 seconds. Fields below fill automatically — or skip and fill them yourself.',li_or:'or',l_website:'…or paste your company URL to fill it in automatically',ph_website:'https://www.yourcompany.com',webLbl:'Read site',webBusy:'Reading…',webSub:'Takes ~10 seconds. You can edit the result.',l_offer:'What you\'re selling',ph_offer:'e.g. An AI sales platform that unifies prospecting, multichannel outreach and CRM in one place',
+l_persona:'Buyer persona / job title',ph_persona:'e.g. Head of Sales',l_trigger:'Trigger — why now?',ph_trigger:'e.g. They just raised a Series B / Hiring 5 SDRs / New VP Sales started',l_industry:'Industry',l_size:'Company size',l_country:'Country',l_ct:'Call type',
+ct:['Cold call · first touch','Follow-up call','Call after an email'],emp:'employees',selCountry:'Select a country…',
+k_call:'Step 02 — The call',t_call:'The call',s_call:'Type your icebreaker or hit the mic and say it like you would with the phone in your hand. Then dial.',
+l_opener:'Your icebreaker',ph_opener:'"Hi Marco, this is Alex from… — I know you weren\'t expecting this call, so I\'ll be quick…"',
+buildLbl:'Build my openers',building:'Building…',stepBuild:'Generate your openers',warnBuild:'Fill in your offer and persona first.',openerNum:'Opener',whyLabel:'Why this works',copyTxt:'Copy to clipboard',copiedTxt:'Copied!',micNoteOn:'Mic available — speak your opener.',micNoteOff:'Voice input is not supported in this browser. Type your opener instead.',micListening:'Listening… speak now, hit the mic again to stop.',micDenied:'Mic blocked. Allow microphone access in your browser (HTTPS only). Heads up: it does NOT work inside the Claude preview — only on the published site.',micNoSpeech:'Heard nothing — try again and speak right after clicking.',micErr:'Mic error',
+warn:'Fill in your offer, the persona and an opener of at least a few words.',
+err:'The line dropped. Check your connection and try again.',
+mood:'Prospect mood',prospect:'The prospect says',works:'Why it works',fails:'Why it doesn\'t',alts:'Steal these instead',use:'Use this',
+again:'Try another opener',shareLi:'Share on LinkedIn',downloadImg:'Download image',ctaTxt:'Your opener is ready. Now run it at scale.',ctaSub:'Put it into practice inside Crono — Europe\'s leading execution layer for B2B sales teams.',ctaBtn:'Book a demo',hist:'Session history',hempty:'No calls yet. Your prospect is waiting.',attempt:'Call',
+zones:['hang-up','meh','booked'],
+moods:{rushed:'rushed between meetings',skeptical:'deeply skeptical',guarded:'polite but guarded',curious:'mildly curious',irritated:'irritated',distracted:'distracted',friendly:'friendly',dismissive:'dismissive',analytical:'analytical, wants facts',deadline:'stressed by a deadline',badmeeting:'just out of a bad meeting',newrole:'new in the role'}},
+it:{tag:'La parte più difficile di una cold call è la prima frase.',k_setup:'Step 01 — Contesto',t_setup:'Il setup',s_setup:'Dì al simulatore chi stai chiamando e cosa vendi. Il prospect si comporterà di conseguenza.',
+li_ph:'URL LinkedIn della persona che stai per chiamare',li_btn:'Ricerca',li_busy:'Sto cercando…',li_ins:'Intel raccolte',li_nourl:'Incolla prima un URL LinkedIn.',l_lang:'Scegli la lingua',stepLi:'Incolla il LinkedIn URL del tuo PROSPECT',liSub:'Circa 10 secondi. I campi sotto si compilano da soli — oppure saltalo e compila tu.',li_or:'oppure',l_website:'…oppure incolla il tuo sito per compilarlo automaticamente',ph_website:'https://www.tuaazienda.com',webLbl:'Leggi sito',webBusy:'Leggendo…',webSub:'Circa 10 secondi. Puoi modificare il risultato.',l_offer:'Cosa vendi',ph_offer:'es. Una piattaforma AI per le vendite che unifica prospecting, outreach multicanale e CRM',
+l_persona:'Buyer persona / ruolo',ph_persona:'es. Head of Sales',l_trigger:'Trigger — perché adesso?',ph_trigger:'es. Hanno appena chiuso un Series B / Stanno assumendo 5 SDR / Nuovo VP Sales',l_industry:'Industry',l_size:'Dimensione azienda',l_country:'Paese',l_ct:'Tipo di chiamata',
+ct:['Cold call · primo contatto','Chiamata di follow-up','Chiamata dopo un\'email'],emp:'dipendenti',selCountry:'Seleziona un paese…',
+k_call:'Step 02 — La chiamata',t_call:'La chiamata',s_call:'Scrivi il tuo icebreaker o premi il microfono e dillo come lo diresti col telefono in mano. Poi chiama.',
+l_opener:'Il tuo icebreaker',ph_opener:'"Ciao Marco, sono Alex di… — so che non si aspettava questa chiamata, vado dritto al punto…"',
+buildLbl:'Costruisci i miei opener',building:'Sto costruendo…',stepBuild:'Genera i tuoi opener',warnBuild:'Compila almeno offerta e persona.',openerNum:'Opener',whyLabel:'Perché funziona',copyTxt:'Copia negli appunti',copiedTxt:'Copiato!',micNoteOn:'Microfono disponibile — detta il tuo opener.',micNoteOff:'L\'input vocale non è supportato in questo browser. Scrivi l\'opener.',micListening:'In ascolto… parla pure, ripremi il microfono per fermare.',micDenied:'Microfono bloccato. Consenti l\'accesso al microfono nel browser (solo HTTPS). Occhio: NON funziona dentro l\'anteprima di Claude — solo sul sito pubblicato.',micNoSpeech:'Non ho sentito nulla — riprova parlando subito dopo il click.',micErr:'Errore microfono',
+warn:'Compila offerta, persona e un opener di almeno qualche parola.',
+err:'È caduta la linea. Controlla la connessione e riprova.',
+mood:'Mood del prospect',prospect:'Il prospect risponde',works:'Perché funziona',fails:'Perché non funziona',alts:'Ruba questi invece',use:'Usa questo',
+again:'Prova un altro opener',shareLi:'Condividi su LinkedIn',downloadImg:'Scarica immagine',ctaTxt:'Il tuo opener è pronto. Ora eseguilo su scala.',ctaSub:'Mettilo in pratica dentro Crono — l\'execution layer leader in Europa per i team di vendita B2B.',ctaBtn:'Prenota una demo',hist:'Storico sessione',hempty:'Nessuna chiamata ancora. Il tuo prospect ti aspetta.',attempt:'Chiamata',
+zones:['riattacca','meh','meeting'],
+moods:{rushed:'di corsa tra un meeting e l\'altro',skeptical:'profondamente scettico',guarded:'cortese ma sulla difensiva',curious:'vagamente incuriosito',irritated:'irritato',distracted:'distratto',friendly:'amichevole',dismissive:'sbrigativo',analytical:'analitico, vuole fatti',deadline:'sotto deadline',badmeeting:'appena uscito da un meeting andato male',newrole:'nuovo nel ruolo'}},
+es:{tag:'La parte más difícil de una llamada en frío es la primera frase.',k_setup:'Paso 01 — Contexto',t_setup:'La configuración',s_setup:'Dile al sistema a quién llamas y qué vendes. Investigará, evaluará y sugerirá.',
+li_ph:'URL de LinkedIn de la persona que vas a llamar',li_btn:'Investigar',li_busy:'Investigando…',li_ins:'Intel recopilada',li_nourl:'Pega una URL de LinkedIn primero.',l_lang:'Elige tu idioma',stepLi:'Pega la URL de LinkedIn de tu PROSPECTO',liSub:'Unos 10 segundos. Los campos se rellenan solos — o salta y completa manualmente.',li_or:'o',l_website:'…o pega tu sitio web para rellenarlo automáticamente',ph_website:'https://www.tuempresa.com',webLbl:'Leer sitio',webBusy:'Leyendo…',webSub:'Unos 10 segundos. Puedes editar el resultado.',l_offer:'Qué vendes',ph_offer:'ej. Una plataforma de ventas con IA que unifica prospección, outreach multicanal y CRM',
+l_persona:'Buyer persona / cargo',ph_persona:'ej. Director de Ventas',l_trigger:'Trigger — por qué ahora?',ph_trigger:'ej. Acaban de cerrar una Serie B / Contratando 5 SDRs / Nuevo VP de Ventas',l_industry:'Industria',l_size:'Tamaño de empresa',l_country:'País',l_ct:'Tipo de llamada',
+ct:['Llamada en frío · primer contacto','Llamada de seguimiento','Llamada tras un email'],emp:'empleados',selCountry:'Selecciona un país…',
+k_call:'Paso 02 — La llamada',t_call:'La llamada',s_call:'Escribe tu icebreaker o pulsa el micro y dilo como lo dirías con el teléfono en la mano. Luego marca.',
+l_opener:'Tu icebreaker',ph_opener:'"Hola Marco, soy Alex de… — sé que no esperaba esta llamada, voy directo al grano…"',
+buildLbl:'Construir mis openers',building:'Construyendo…',stepBuild:'Genera tus openers',warnBuild:'Completa al menos la oferta y la persona.',openerNum:'Opener',whyLabel:'Por qué funciona',copyTxt:'Copiar al portapapeles',copiedTxt:'Copiado!',micNoteOn:'Micro disponible — dicta tu opener.',micNoteOff:'La entrada de voz no está soportada en este navegador. Escribe tu opener.',micListening:'Escuchando… habla, pulsa el micro otra vez para parar.',micDenied:'Micrófono bloqueado. Permite el acceso al micrófono en el navegador (solo HTTPS). Ojo: NO funciona en la vista previa de Claude — solo en el sitio publicado.',micNoSpeech:'No he oído nada — inténtalo de nuevo hablando justo después del clic.',micErr:'Error de micrófono',
+warn:'Completa la oferta, la persona y un opener de al menos unas palabras.',
+err:'Se cortó la línea. Revisa tu conexión e inténtalo de nuevo.',
+mood:'Estado del prospecto',prospect:'El prospecto dice',works:'Por qué funciona',fails:'Por qué no funciona',alts:'Róbate estos',use:'Usar este',
+again:'Probar otro opener',shareLi:'Compartir en LinkedIn',downloadImg:'Descargar imagen',ctaTxt:'Tu opener está listo. Ahora ejecútalo a escala.',ctaSub:'Ponlo en práctica dentro de Crono — l\'execution layer líder en Europa para equipos de ventas B2B.',ctaBtn:'Reserva una demo',hist:'Historial de sesión',hempty:'Aún sin llamadas. Tu prospecto espera.',attempt:'Llamada',
+zones:['cuelga','meh','reunión'],
+moods:{rushed:'con prisa entre reuniones',skeptical:'profundamente escéptico',guarded:'educado pero a la defensiva',curious:'algo curioso',irritated:'irritado',distracted:'distraído',friendly:'amable',dismissive:'cortante',analytical:'analítico, quiere datos',deadline:'estresado por un deadline',badmeeting:'recién salido de una mala reunión',newrole:'nuevo en el puesto'}},
+fr:{tag:'La partie la plus difficile d\'un cold call est la première phrase.',k_setup:'Étape 01 — Contexte',t_setup:'Le setup',s_setup:'Indiquez qui vous appelez et ce que vous vendez. Le système recherchera, évaluera et suggérera.',
+li_ph:'URL LinkedIn de la personne que vous allez appeler',li_btn:'Rechercher',li_busy:'Recherche en cours…',li_ins:'Intel collectée',li_nourl:'Collez une URL LinkedIn d\'abord.',l_lang:'Choisissez votre langue',stepLi:'Collez l\'URL LinkedIn de votre PROSPECT',liSub:'Environ 10 secondes. Les champs se remplissent automatiquement — ou passez et remplissez vous-même.',li_or:'ou',l_website:'…ou collez votre site pour le remplir automatiquement',ph_website:'https://www.votreentreprise.com',webLbl:'Lire le site',webBusy:'Lecture…',webSub:'Environ 10 secondes. Vous pouvez modifier le résultat.',l_offer:'Ce que vous vendez',ph_offer:'ex. Une plateforme de vente IA qui unifie prospection, outreach multicanal et CRM',
+l_persona:'Buyer persona / poste',ph_persona:'ex. Directeur commercial',l_trigger:'Trigger — pourquoi maintenant?',ph_trigger:'ex. Viennent de lever une Serie B / Recrutent 5 SDR / Nouveau VP Sales',l_industry:'Secteur',l_size:'Taille d\'entreprise',l_country:'Pays',l_ct:'Type d\'appel',
+ct:['Cold call · premier contact','Appel de relance','Appel après un email'],emp:'employés',selCountry:'Sélectionnez un pays…',
+k_call:'Étape 02 — L\'appel',t_call:'L\'appel',s_call:'Tapez votre icebreaker ou appuyez sur le micro et dites-le comme au téléphone. Puis composez.',
+l_opener:'Votre icebreaker',ph_opener:'"Bonjour Marco, Alex de… — je sais que vous n\'attendiez pas cet appel, je vais droit au but…"',
+buildLbl:'Construire mes openers',building:'Construction…',stepBuild:'Générez vos openers',warnBuild:'Remplissez au moins l\'offre et la persona.',openerNum:'Opener',whyLabel:'Pourquoi ça marche',copyTxt:'Copier',copiedTxt:'Copié!',micNoteOn:'Micro disponible — dictez votre opener.',micNoteOff:'La saisie vocale n\'est pas supportée par ce navigateur. Tapez votre opener.',micListening:'À l\'écoute… parlez, réappuyez sur le micro pour arrêter.',micDenied:'Micro bloqué. Autorisez l\'accès au micro dans le navigateur (HTTPS uniquement). Attention : ça ne fonctionne PAS dans l\'aperçu de Claude — seulement sur le site publié.',micNoSpeech:'Je n\'ai rien entendu — réessayez en parlant juste après le clic.',micErr:'Erreur micro',
+warn:'Remplissez l\'offre, la persona et un opener d\'au moins quelques mots.',
+err:'La ligne a coupé. Vérifiez votre connexion et réessayez.',
+mood:'Humeur du prospect',prospect:'Le prospect répond',works:'Pourquoi ça marche',fails:'Pourquoi ça ne marche pas',alts:'Volez plutôt ceux-ci',use:'Utiliser',
+again:'Essayer un autre opener',shareLi:'Partager sur LinkedIn',downloadImg:'Télécharger image',ctaTxt:'Votre opener est prêt. Exécutez-le à grande échelle.',ctaSub:'Mettez-le en pratique dans Crono — l\'execution layer leader en Europe pour les équipes de vente B2B.',ctaBtn:'Réserver une démo',hist:'Historique de session',hempty:'Aucun appel pour l\'instant. Votre prospect attend.',attempt:'Appel',
+zones:['raccroche','bof','rendez-vous'],
+moods:{rushed:'pressé entre deux réunions',skeptical:'profondément sceptique',guarded:'poli mais sur la réserve',curious:'vaguement curieux',irritated:'irrité',distracted:'distrait',friendly:'amical',dismissive:'expéditif',analytical:'analytique, veut des faits',deadline:'stressé par une deadline',badmeeting:'sort d\'une mauvaise réunion',newrole:'nouveau dans le poste'}},
+de:{tag:'Der schwerste Teil eines Cold Calls ist der erste Satz.',k_setup:'Schritt 01 — Kontext',t_setup:'Das Setup',s_setup:'Sag dem System, wen du anrufst und was du verkaufst. Es recherchiert, bewertet und schlägt vor.',
+li_ph:'LinkedIn-URL der Person die du gleich anrufst',li_btn:'Recherche',l_lang:'Sprache wählen',stepLi:'LinkedIn-URL deines PROSPECTS einfügen',liSub:'Ca. 10 Sekunden. Felder füllen sich automatisch — oder überspringe und fülle sie selbst aus.',li_or:'oder',li_busy:'Recherchiere…',li_ins:'Intel gesammelt',li_nourl:'Füge zuerst eine LinkedIn-URL ein.',l_website:'…oder deine Website einfügen um automatisch auszufüllen',ph_website:'https://www.deinunternehmen.de',webLbl:'Website lesen',webBusy:'Lese…',webSub:'Ca. 10 Sekunden. Du kannst das Ergebnis bearbeiten.',l_offer:'Was du verkaufst',ph_offer:'z. B. Eine KI-Sales-Plattform, die Prospecting, Multichannel-Outreach und CRM vereint',
+l_persona:'Buyer Persona / Position',ph_persona:'z. B. Head of Sales',l_trigger:'Trigger — warum jetzt?',ph_trigger:'z. B. Gerade Series B abgeschlossen / Stellen 5 SDRs ein / Neuer VP Sales',l_industry:'Branche',l_size:'Unternehmensgröße',l_country:'Land',l_ct:'Anruftyp',
+ct:['Cold Call · Erstkontakt','Follow-up-Anruf','Anruf nach einer E-Mail'],emp:'Mitarbeitende',selCountry:'Land auswählen…',
+k_call:'Schritt 02 — Der Anruf',t_call:'Der Anruf',s_call:'Tippe deinen Icebreaker oder drücke das Mikro und sprich ihn wie am Telefon. Dann wählen.',
+l_opener:'Dein Icebreaker',ph_opener:'"Hallo Marco, hier ist Alex von… — ich weiß, Sie haben diesen Anruf nicht erwartet, ich komme direkt zum Punkt…"',
+buildLbl:'Meine Opener bauen',building:'Wird gebaut…',stepBuild:'Generiere deine Opener',warnBuild:'Fülle mindestens Angebot und Persona aus.',openerNum:'Opener',whyLabel:'Warum das funktioniert',copyTxt:'In Zwischenablage kopieren',copiedTxt:'Kopiert!',micNoteOn:'Mikro verfügbar — sprich deinen Opener ein.',micNoteOff:'Spracheingabe wird in diesem Browser nicht unterstützt. Tippe deinen Opener.',micListening:'Höre zu… sprich jetzt, drücke das Mikro erneut zum Stoppen.',micDenied:'Mikrofon blockiert. Erlaube den Mikrofonzugriff im Browser (nur HTTPS). Achtung: In der Claude-Vorschau funktioniert es NICHT — nur auf der veröffentlichten Seite.',micNoSpeech:'Nichts gehört — versuch es erneut und sprich direkt nach dem Klick.',micErr:'Mikrofonfehler',
+warn:'Fülle Angebot, Persona und einen Opener mit mindestens ein paar Wörtern aus.',
+err:'Die Leitung ist abgebrochen. Prüfe deine Verbindung und versuche es erneut.',
+mood:'Stimmung des Prospects',prospect:'Der Prospect sagt',works:'Warum es funktioniert',fails:'Warum es nicht funktioniert',alts:'Klau dir lieber diese',use:'Verwenden',
+again:'Anderen Opener testen',shareLi:'Auf LinkedIn teilen',downloadImg:'Bild herunterladen',ctaTxt:'Dein Opener steht. Jetzt skalieren.',ctaSub:'Setze es in die Praxis um mit Crono — Europe\'s leading execution layer for B2B sales teams.',ctaBtn:'Demo buchen',hist:'Sitzungsverlauf',hempty:'Noch keine Anrufe. Dein Prospect wartet.',attempt:'Anruf',
+zones:['legt auf','meh','Termin'],
+moods:{rushed:'in Eile zwischen Meetings',skeptical:'zutiefst skeptisch',guarded:'höflich, aber reserviert',curious:'leicht neugierig',irritated:'genervt',distracted:'abgelenkt',friendly:'freundlich',dismissive:'abweisend',analytical:'analytisch, will Fakten',deadline:'im Deadline-Stress',badmeeting:'kommt aus einem schlechten Meeting',newrole:'neu in der Rolle'}}
+};
+const LANGNAME={en:'English',it:'Italian',es:'Spanish',fr:'French',de:'German'};
+const SRLANG={en:'en-US',it:'it-IT',es:'es-ES',fr:'fr-FR',de:'de-DE'};
+
+/* =================== INDUSTRIES (en,it,es,fr,de) =================== */
+const SECTORS=[
+{n:['Agriculture & Food Production','Agricoltura e produzione alimentare','Agricultura y producción alimentaria','Agriculture et production alimentaire','Landwirtschaft & Lebensmittelproduktion'],i:[
+['Agriculture & Farming','Agricoltura e allevamento','Agricultura y ganadería','Agriculture et élevage','Land- und Viehwirtschaft'],
+['Agtech','Agtech','Agtech','Agtech','Agtech'],
+['Fishing & Aquaculture','Pesca e acquacoltura','Pesca y acuicultura','Pêche et aquaculture','Fischerei & Aquakultur'],
+['Forestry','Silvicoltura','Silvicultura','Sylviculture','Forstwirtschaft'],
+['Food Production & Processing','Produzione e trasformazione alimentare','Producción y procesado de alimentos','Production et transformation alimentaire','Lebensmittelherstellung & -verarbeitung'],
+['Beverages','Bevande','Bebidas','Boissons','Getränke'],
+['Wine & Spirits','Vino e liquori','Vinos y licores','Vins et spiritueux','Wein & Spirituosen'],
+['Tobacco','Tabacco','Tabaco','Tabac','Tabak']]},
+{n:['Energy, Utilities & Resources','Energia, utility e risorse','Energía, utilities y recursos','Énergie, services publics et ressources','Energie, Versorgung & Rohstoffe'],i:[
+['Oil & Gas','Petrolio e gas','Petróleo y gas','Pétrole et gaz','Öl & Gas'],
+['Renewable Energy','Energie rinnovabili','Energías renovables','Énergies renouvelables','Erneuerbare Energien'],
+['Solar','Solare','Solar','Solaire','Solarenergie'],
+['Wind','Eolico','Eólica','Éolien','Windenergie'],
+['Electric Utilities','Utility elettriche','Compañías eléctricas','Électricité (utilities)','Stromversorger'],
+['Water Utilities','Utility idriche','Empresas de agua','Eau (utilities)','Wasserversorger'],
+['Waste Management & Recycling','Gestione rifiuti e riciclo','Gestión de residuos y reciclaje','Gestion des déchets et recyclage','Abfallwirtschaft & Recycling'],
+['Mining & Metals','Estrazione e metalli','Minería y metales','Mines et métaux','Bergbau & Metalle'],
+['Cleantech & Energy Tech','Cleantech ed energy tech','Cleantech y energy tech','Cleantech et energy tech','Cleantech & Energy Tech']]},
+{n:['Materials & Chemicals','Materiali e chimica','Materiales y química','Matériaux et chimie','Werkstoffe & Chemie'],i:[
+['Chemicals','Chimica','Química','Chimie','Chemie'],
+['Plastics & Rubber','Plastica e gomma','Plásticos y caucho','Plastiques et caoutchouc','Kunststoffe & Gummi'],
+['Paper & Packaging','Carta e packaging','Papel y embalaje','Papier et emballage','Papier & Verpackung'],
+['Glass & Ceramics','Vetro e ceramica','Vidrio y cerámica','Verre et céramique','Glas & Keramik'],
+['Textiles','Tessile','Textil','Textile','Textilien']]},
+{n:['Construction & Real Estate','Edilizia e immobiliare','Construcción e inmobiliario','Construction et immobilier','Bau & Immobilien'],i:[
+['Construction','Costruzioni','Construcción','Construction','Bauwesen'],
+['Building Materials','Materiali da costruzione','Materiales de construcción','Matériaux de construction','Baustoffe'],
+['Architecture & Planning','Architettura e urbanistica','Arquitectura y urbanismo','Architecture et urbanisme','Architektur & Planung'],
+['Civil Engineering','Ingegneria civile','Ingeniería civil','Génie civil','Bauingenieurwesen'],
+['Real Estate','Immobiliare','Inmobiliario','Immobilier','Immobilien'],
+['Proptech','Proptech','Proptech','Proptech','Proptech'],
+['Facilities Management','Facility management','Gestión de instalaciones','Facility management','Facility Management']]},
+{n:['Manufacturing & Industrial','Manifattura e industria','Manufactura e industria','Industrie manufacturière','Fertigung & Industrie'],i:[
+['Industrial Machinery','Macchinari industriali','Maquinaria industrial','Machines industrielles','Industriemaschinen'],
+['Industrial Automation & Robotics','Automazione industriale e robotica','Automatización industrial y robótica','Automatisation industrielle et robotique','Industrieautomation & Robotik'],
+['Electrical Equipment','Apparecchiature elettriche','Equipos eléctricos','Équipements électriques','Elektroausrüstung'],
+['Electronics Manufacturing','Produzione elettronica','Fabricación electrónica','Fabrication électronique','Elektronikfertigung'],
+['Semiconductors','Semiconduttori','Semiconductores','Semi-conducteurs','Halbleiter'],
+['Aerospace & Defense','Aerospazio e difesa','Aeroespacial y defensa','Aérospatiale et défense','Luft- & Raumfahrt und Verteidigung'],
+['Shipbuilding','Cantieristica navale','Construcción naval','Construction navale','Schiffbau'],
+['Furniture','Arredamento','Muebles','Ameublement','Möbel'],
+['Home Appliances','Elettrodomestici','Electrodomésticos','Électroménager','Haushaltsgeräte'],
+['3D Printing & Additive Manufacturing','Stampa 3D e manifattura additiva','Impresión 3D y fabricación aditiva','Impression 3D et fabrication additive','3D-Druck & additive Fertigung']]},
+{n:['Automotive & Mobility','Automotive e mobilità','Automoción y movilidad','Automobile et mobilité','Automobil & Mobilität'],i:[
+['Automotive (OEM)','Automotive (OEM)','Automoción (OEM)','Automobile (OEM)','Automobil (OEM)'],
+['Auto Components','Componentistica auto','Componentes de automoción','Équipementiers auto','Autozulieferer'],
+['EV & Charging','Veicoli elettrici e ricarica','Vehículos eléctricos y carga','Véhicules électriques et recharge','E-Mobilität & Ladeinfrastruktur'],
+['Dealerships & Vehicle Retail','Concessionarie','Concesionarios','Concessions automobiles','Autohandel'],
+['Mobility & Ride-hailing','Mobilità e ride-hailing','Movilidad y ride-hailing','Mobilité et VTC','Mobilität & Ride-Hailing']]},
+{n:['Transport & Logistics','Trasporti e logistica','Transporte y logística','Transport et logistique','Transport & Logistik'],i:[
+['Logistics & Supply Chain','Logistica e supply chain','Logística y cadena de suministro','Logistique et supply chain','Logistik & Supply Chain'],
+['Freight & Trucking','Trasporto merci su gomma','Transporte de mercancías por carretera','Fret et transport routier','Güterverkehr & Spedition'],
+['Maritime & Shipping','Marittimo e shipping','Marítimo y naviero','Maritime et shipping','Seefracht & Schifffahrt'],
+['Airlines & Aviation','Compagnie aeree e aviazione','Aerolíneas y aviación','Compagnies aériennes et aviation','Luftfahrt'],
+['Rail','Ferroviario','Ferroviario','Ferroviaire','Schienenverkehr'],
+['Postal & Courier','Postale e corrieri','Postal y mensajería','Postal et coursiers','Post & Kurierdienste'],
+['Warehousing','Magazzinaggio','Almacenaje','Entreposage','Lagerhaltung']]},
+{n:['Retail & Consumer','Retail e consumo','Retail y consumo','Commerce et consommation','Handel & Konsum'],i:[
+['Retail (brick & mortar)','Retail (negozi fisici)','Retail (tiendas físicas)','Commerce de détail (physique)','Einzelhandel (stationär)'],
+['E-commerce','E-commerce','E-commerce','E-commerce','E-Commerce'],
+['Marketplaces','Marketplace','Marketplaces','Places de marché','Marktplätze'],
+['Wholesale & Distribution','Ingrosso e distribuzione','Mayorista y distribución','Gros et distribution','Großhandel & Distribution'],
+['Consumer Electronics','Elettronica di consumo','Electrónica de consumo','Électronique grand public','Unterhaltungselektronik'],
+['Fashion & Apparel','Moda e abbigliamento','Moda y confección','Mode et habillement','Mode & Bekleidung'],
+['Luxury Goods','Beni di lusso','Artículos de lujo','Produits de luxe','Luxusgüter'],
+['Cosmetics & Personal Care','Cosmetica e cura della persona','Cosmética y cuidado personal','Cosmétiques et soins personnels','Kosmetik & Körperpflege'],
+['Home & Garden','Casa e giardino','Hogar y jardín','Maison et jardin','Haus & Garten'],
+['Sporting Goods','Articoli sportivi','Artículos deportivos','Articles de sport','Sportartikel'],
+['Toys & Games','Giocattoli','Juguetes','Jouets','Spielwaren'],
+['Pet Industry','Settore pet','Sector mascotas','Secteur animalier','Heimtierbranche'],
+['FMCG','Beni di largo consumo (FMCG)','Gran consumo (FMCG)','Grande consommation (FMCG)','FMCG']]},
+{n:['Hospitality, Travel & Events','Hospitality, viaggi ed eventi','Hostelería, viajes y eventos','Hôtellerie, voyages et événements','Gastgewerbe, Reisen & Events'],i:[
+['Restaurants & Food Service','Ristorazione','Restauración','Restauration','Gastronomie'],
+['Catering','Catering','Catering','Traiteur','Catering'],
+['Hotels & Accommodation','Hotel e ricettività','Hoteles y alojamiento','Hôtels et hébergement','Hotels & Beherbergung'],
+['Travel & Tourism','Viaggi e turismo','Viajes y turismo','Voyages et tourisme','Reisen & Tourismus'],
+['Events & Conferences','Eventi e congressi','Eventos y congresos','Événements et congrès','Events & Kongresse'],
+['Gambling & Casinos','Gioco d\'azzardo e casinò','Juego y casinos','Jeux d\'argent et casinos','Glücksspiel & Casinos']]},
+{n:['Media, Entertainment & Sports','Media, intrattenimento e sport','Medios, entretenimiento y deporte','Médias, divertissement et sport','Medien, Unterhaltung & Sport'],i:[
+['Media & Publishing','Media ed editoria','Medios y editorial','Médias et édition','Medien & Verlagswesen'],
+['Broadcasting','Broadcasting','Radiodifusión','Audiovisuel','Rundfunk'],
+['Film & TV Production','Produzione cinema e TV','Producción de cine y TV','Production cinéma et TV','Film- & TV-Produktion'],
+['Music','Musica','Música','Musique','Musik'],
+['Gaming & Esports','Gaming ed esport','Gaming y esports','Jeux vidéo et esport','Gaming & E-Sport'],
+['Sports','Sport','Deporte','Sport','Sport'],
+['Advertising & AdTech','Pubblicità e adtech','Publicidad y adtech','Publicité et adtech','Werbung & AdTech'],
+['Photography & Creative Production','Fotografia e produzione creativa','Fotografía y producción creativa','Photographie et production créative','Fotografie & Kreativproduktion']]},
+{n:['Software, IT & Telecom','Software, IT e telecomunicazioni','Software, TI y telecomunicaciones','Logiciels, IT et télécoms','Software, IT & Telekommunikation'],i:[
+['B2B SaaS','B2B SaaS','SaaS B2B','SaaS B2B','B2B SaaS'],
+['Enterprise Software','Software enterprise','Software empresarial','Logiciels d\'entreprise','Unternehmenssoftware'],
+['Consumer Apps','App consumer','Apps de consumo','Applications grand public','Consumer-Apps'],
+['IT Services & Consulting','Servizi e consulenza IT','Servicios y consultoría TI','Services et conseil IT','IT-Dienstleistungen & Beratung'],
+['Managed Services (MSP)','Managed services (MSP)','Servicios gestionados (MSP)','Services managés (MSP)','Managed Services (MSP)'],
+['Cybersecurity','Cybersecurity','Ciberseguridad','Cybersécurité','Cybersicherheit'],
+['Cloud & Hosting','Cloud e hosting','Cloud y hosting','Cloud et hébergement','Cloud & Hosting'],
+['Data Centers','Data center','Centros de datos','Centres de données','Rechenzentren'],
+['Developer Tools','Strumenti per sviluppatori','Herramientas para desarrolladores','Outils développeurs','Entwicklertools'],
+['AI & Machine Learning','AI e machine learning','IA y machine learning','IA et machine learning','KI & Machine Learning'],
+['Data & Analytics','Dati e analytics','Datos y analítica','Données et analytique','Daten & Analytik'],
+['Blockchain & Web3','Blockchain e Web3','Blockchain y Web3','Blockchain et Web3','Blockchain & Web3'],
+['IoT','IoT','IoT','IoT','IoT'],
+['AR / VR','AR / VR','RA / RV','RA / RV','AR / VR'],
+['Hardware & Devices','Hardware e dispositivi','Hardware y dispositivos','Matériel et appareils','Hardware & Geräte'],
+['Telecommunications','Telecomunicazioni','Telecomunicaciones','Télécommunications','Telekommunikation'],
+['Internet Service Providers','Provider internet (ISP)','Proveedores de internet (ISP)','Fournisseurs d\'accès (FAI)','Internetanbieter (ISP)']]},
+{n:['Financial Services','Servizi finanziari','Servicios financieros','Services financiers','Finanzdienstleistungen'],i:[
+['Banking','Banche','Banca','Banque','Bankwesen'],
+['Fintech','Fintech','Fintech','Fintech','Fintech'],
+['Payments','Pagamenti','Pagos','Paiements','Zahlungsverkehr'],
+['Lending & Credit','Prestiti e credito','Préstamos y crédito','Prêts et crédit','Kredite & Finanzierung'],
+['Insurance','Assicurazioni','Seguros','Assurance','Versicherungen'],
+['Insurtech','Insurtech','Insurtech','Insurtech','Insurtech'],
+['Asset & Wealth Management','Asset e wealth management','Gestión de activos y patrimonios','Gestion d\'actifs et de patrimoine','Vermögensverwaltung'],
+['VC & Private Equity','Venture capital e private equity','Venture capital y private equity','Capital-risque et private equity','VC & Private Equity'],
+['Accounting & Audit','Contabilità e revisione','Contabilidad y auditoría','Comptabilité et audit','Buchhaltung & Wirtschaftsprüfung'],
+['Crypto & Digital Assets','Cripto e asset digitali','Cripto y activos digitales','Crypto et actifs numériques','Krypto & digitale Assets']]},
+{n:['Healthcare & Life Sciences','Sanità e life science','Salud y ciencias de la vida','Santé et sciences de la vie','Gesundheit & Life Sciences'],i:[
+['Hospitals & Health Systems','Ospedali e sistemi sanitari','Hospitales y sistemas de salud','Hôpitaux et systèmes de santé','Krankenhäuser & Gesundheitssysteme'],
+['Clinics & Medical Practices','Cliniche e studi medici','Clínicas y consultas médicas','Cliniques et cabinets médicaux','Kliniken & Arztpraxen'],
+['Healthtech & Digital Health','Healthtech e digital health','Healthtech y salud digital','Healthtech et santé numérique','Healthtech & Digital Health'],
+['Pharmaceuticals','Farmaceutico','Farmacéutica','Pharmaceutique','Pharma'],
+['Biotechnology','Biotecnologie','Biotecnología','Biotechnologie','Biotechnologie'],
+['Medical Devices','Dispositivi medici','Dispositivos médicos','Dispositifs médicaux','Medizintechnik'],
+['Dental','Odontoiatria','Dental','Dentaire','Dental'],
+['Veterinary','Veterinaria','Veterinaria','Vétérinaire','Veterinärmedizin'],
+['Mental Health & Wellness','Salute mentale e benessere','Salud mental y bienestar','Santé mentale et bien-être','Mentale Gesundheit & Wellness'],
+['Fitness','Fitness','Fitness','Fitness','Fitness'],
+['Elderly Care','Assistenza anziani','Cuidado de mayores','Soins aux personnes âgées','Altenpflege']]},
+{n:['Education','Istruzione','Educación','Éducation','Bildung'],i:[
+['Higher Education','Università','Educación superior','Enseignement supérieur','Hochschulwesen'],
+['K-12 Schools','Scuole','Colegios (K-12)','Écoles (primaire et secondaire)','Schulen'],
+['Edtech','Edtech','Edtech','Edtech','Edtech'],
+['Corporate Training & E-learning','Formazione aziendale ed e-learning','Formación corporativa y e-learning','Formation en entreprise et e-learning','Weiterbildung & E-Learning'],
+['Language Learning','Apprendimento lingue','Aprendizaje de idiomas','Apprentissage des langues','Sprachenlernen']]},
+{n:['Professional Services','Servizi professionali','Servicios profesionales','Services professionnels','Professionelle Dienstleistungen'],i:[
+['Legal Services','Servizi legali','Servicios legales','Services juridiques','Rechtsdienstleistungen'],
+['Legaltech','Legaltech','Legaltech','Legaltech','Legaltech'],
+['Management Consulting','Consulenza strategica','Consultoría estratégica','Conseil en management','Unternehmensberatung'],
+['Marketing & Creative Agencies','Agenzie marketing e creative','Agencias de marketing y creativas','Agences marketing et créatives','Marketing- & Kreativagenturen'],
+['PR & Communications','PR e comunicazione','RRPP y comunicación','RP et communication','PR & Kommunikation'],
+['Design Agencies','Agenzie di design','Agencias de diseño','Agences de design','Designagenturen'],
+['HR & Recruiting','HR e recruiting','RRHH y selección','RH et recrutement','HR & Recruiting'],
+['HRtech','HRtech','HRtech','HRtech','HRtech'],
+['Staffing & BPO','Somministrazione e BPO','ETT y BPO','Intérim et BPO','Zeitarbeit & BPO'],
+['Translation & Localization','Traduzione e localizzazione','Traducción y localización','Traduction et localisation','Übersetzung & Lokalisierung'],
+['Market Research','Ricerche di mercato','Investigación de mercados','Études de marché','Marktforschung'],
+['Engineering Services','Servizi di ingegneria','Servicios de ingeniería','Services d\'ingénierie','Ingenieurdienstleistungen'],
+['Security Services','Servizi di sicurezza','Servicios de seguridad','Services de sécurité','Sicherheitsdienste'],
+['Cleaning & Facility Services','Pulizie e servizi facility','Limpieza y servicios','Nettoyage et services','Reinigung & Gebäudeservice']]},
+{n:['Public Sector & Nonprofit','Settore pubblico e non profit','Sector público y sin ánimo de lucro','Secteur public et associatif','Öffentlicher Sektor & Non-Profit'],i:[
+['Government & Public Administration','PA e governo','Gobierno y administración pública','Gouvernement et administration publique','Regierung & öffentliche Verwaltung'],
+['Defense & Military','Difesa','Defensa','Défense','Verteidigung'],
+['Nonprofit & NGOs','Non profit e ONG','ONG y sin ánimo de lucro','ONG et associations','NGOs & Non-Profit'],
+['International Organizations','Organizzazioni internazionali','Organizaciones internacionales','Organisations internationales','Internationale Organisationen'],
+['Emergency Services','Servizi di emergenza','Servicios de emergencia','Services d\'urgence','Rettungsdienste'],
+['Culture, Museums & Libraries','Cultura, musei e biblioteche','Cultura, museos y bibliotecas','Culture, musées et bibliothèques','Kultur, Museen & Bibliotheken'],
+['Religious Organizations','Organizzazioni religiose','Organizaciones religiosas','Organisations religieuses','Religiöse Organisationen']]},
+{n:['Other','Altro','Otro','Autre','Sonstiges'],i:[
+['Other','Altro','Otro','Autre','Sonstiges']]}
+];
+
+/* =================== COUNTRIES (ISO 3166-1 alpha-2) =================== */
+const ISO="AF AL DZ AD AO AG AR AM AU AT AZ BS BH BD BB BY BE BZ BJ BT BO BA BW BR BN BG BF BI CV KH CM CA CF TD CL CN CO KM CG CD CR CI HR CU CY CZ DK DJ DM DO EC EG SV GQ ER EE SZ ET FJ FI FR GA GM GE DE GH GR GD GT GN GW GY HT HN HK HU IS IN ID IR IQ IE IL IT JM JP JO KZ KE KI KW KG LA LV LB LS LR LY LI LT LU MO MG MW MY MV ML MT MH MR MU MX FM MD MC MN ME MA MZ MM NA NR NP NL NZ NI NE NG MK NO OM PK PW PS PA PG PY PE PH PL PT QA RO RU RW KN LC VC WS SM ST SA SN RS SC SL SG SK SI SB SO ZA KR SS ES LK SD SR SE CH SY TW TJ TZ TH TL TG TO TT TN TR TM TV UG UA AE GB US UY UZ VU VA VE VN YE ZM ZW".split(" ");
+
+/* =================== SIZES =================== */
+const SIZES=['1–10','11–50','51–200','201–500','501–1,000','1,001–5,000','5,000+'];
+const MOODKEYS=['rushed','skeptical','guarded','curious','irritated','distracted','friendly','dismissive','analytical','deadline','badmeeting','newrole'];
+
+/* =================== STATE =================== */
+let lang='en', callType=0, handDismissed=false;
+let researchData=null; let busy=false; // stores LinkedIn research results
+const $=id=>document.getElementById(id);
+
+/* ============================================================
+   SETUP: paste your Anthropic API key below.
+   Get one at console.anthropic.com
+   Then go to Settings → Limits and set a monthly spending cap.
+   ============================================================ */
+const API_KEY='PASTE_YOUR_KEY_HERE';
+
+/* =================== RENDER UI =================== */
+function buildLangs(){
+  const w=$('langs'); w.innerHTML='';
+  LANGS.forEach(l=>{
+    const b=document.createElement('button'); b.textContent=l.toUpperCase();
+    if(l===lang)b.classList.add('on');
+    b.onclick=()=>{handDismissed=true; lang=l; applyLang();};
+    w.appendChild(b);
+  });
+  if(!handDismissed){const hand=document.createElement('span'); hand.className='hand'; hand.id='langHand'; hand.textContent='\u{1F448}'; hand.style.cssText='font-size:22px;animation:poke 1.2s ease-in-out infinite;display:inline-block;transform-origin:center'; w.appendChild(hand);}
+}
+function buildIndustry(){
+  const sel=$('industry'), li=LANGS.indexOf(lang), prev=sel.value;
+  sel.innerHTML='';
+  SECTORS.forEach((s,si)=>{
+    const og=document.createElement('optgroup'); og.label=s.n[li];
+    s.i.forEach((it,ii)=>{
+      const o=document.createElement('option'); o.value=si+'.'+ii; o.textContent=it[li]; og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+  sel.value=prev||'10.0'; if(!sel.value)sel.value='10.0';
+}
+function buildCountry(){
+  const sel=$('country'), prev=sel.value, t=T[lang];
+  let names;
+  try{names=new Intl.DisplayNames([lang],{type:'region'});}catch(e){names=new Intl.DisplayNames(['en'],{type:'region'});}
+  const list=ISO.map(c=>({c,n:names.of(c)||c})).sort((a,b)=>a.n.localeCompare(b.n,lang));
+  sel.innerHTML='<option value="">'+t.selCountry+'</option>'+list.map(x=>`<option value="${x.c}">${x.n}</option>`).join('');
+  sel.value=prev||'';
+}
+function buildSizes(){
+  const sel=$('size'), prev=sel.value;
+  sel.innerHTML=SIZES.map((s,i)=>`<option value="${i}">${s} ${T[lang].emp}</option>`).join('');
+  sel.value=prev||'2';
+}
+function buildCT(){
+  const w=$('ctSeg'); w.innerHTML='';
+  T[lang].ct.forEach((c,i)=>{
+    const b=document.createElement('button'); b.textContent=c;
+    if(i===callType)b.classList.add('on');
+    b.onclick=()=>{callType=i; buildCT();};
+    w.appendChild(b);
+  });
+  if(!handDismissed){const hand=document.createElement('span'); hand.className='hand'; hand.id='langHand'; hand.textContent='\u{1F448}'; w.appendChild(hand);}
+}
+function applyLang(){
+  const t=T[lang];
+  buildLangs();
+  $('tagline').textContent=t.tag;
+  $('k_setup').textContent=t.k_setup; $('t_setup').textContent=t.t_setup; $('s_setup').textContent=t.s_setup;
+  $('liUrl').placeholder=t.li_ph; $('resLbl').textContent=t.li_btn; $('insTitle').textContent=t.li_ins;
+  if($('l_lang'))$('l_lang').textContent=t.l_lang;
+  $('stepLi').textContent=t.stepLi; $('liSub').textContent=t.liSub; $('orDiv').textContent=t.li_or;
+  if($('stepFields'))$('stepFields').textContent={en:'Review & adjust',it:'Controlla e aggiusta',es:'Revisa y ajusta',fr:'Verifiez et ajustez',de:'Pruefen und anpassen'}[lang];
+  $('l_website').textContent=t.l_website; $('website').placeholder=t.ph_website; $('webLbl').textContent=t.webLbl; $('webSub').textContent=t.webSub;
+  if($('offerOr'))$('offerOr').textContent='';
+  $('l_offer').textContent=t.l_offer; $('offer').placeholder=t.ph_offer;
+  $('l_persona').textContent=t.l_persona; $('persona').placeholder=t.ph_persona;
+  $('l_trigger').textContent=t.l_trigger; $('trigger').placeholder=t.ph_trigger;
+  $('l_industry').textContent=t.l_industry; $('l_size').textContent=t.l_size; $('l_country').textContent=t.l_country; $('l_ct').textContent=t.l_ct;
+  if($('buildBtn'))$('buildLbl').textContent=busy?t.building:t.buildLbl;
+  if($('stepBuild'))$('stepBuild').textContent=t.stepBuild;
+
+
+
+
+
+  if($('ctaTxt'))$('ctaTxt').textContent=t.ctaTxt;
+  if($('ctaSub'))$('ctaSub').textContent=t.ctaSub;
+  if($('ctaBtn'))$('ctaBtn').textContent=t.ctaBtn;
+
+
+
+  buildIndustry(); buildCountry(); buildSizes(); buildCT(); renderTips();
+  document.documentElement.lang=lang;
+}
+
+
+
+/* =================== LINKEDIN RESEARCH =================== */
+let researching=false;
+async function doResearch(){
+  if(researching)return;
+  const t=T[lang], url=$('liUrl').value.trim();
+  if(!url||!url.includes('linkedin.com')){$('warn').textContent=t.li_nourl;$('warn').style.display='block';setTimeout(()=>$('warn').style.display='none',3000);return;}
+
+  researching=true;
+  const btn=$('researchBtn'); btn.disabled=true; btn.classList.add('busy'); $('resLbl').textContent=t.li_busy;
+  $('insights').style.display='none';
+
+  const prompt=`You are a B2B sales research assistant. The user pasted this LinkedIn URL: ${url}
+
+Use web search to research this person and their company thoroughly. Find:
+1. Full name, current job title, company name
+2. Company industry, approximate employee count, HQ country
+3. 3-5 recent triggers/news an SDR could reference: funding rounds, hiring spikes, product launches, leadership changes, partnerships, awards, earnings, office expansions, tech stack changes, competitor moves
+4. The person's background highlights: previous roles, expertise areas, public content they've posted
+
+Return ONLY minified JSON, no markdown, no fences:
+{"name":"...","title":"...","company":"...","industry_en":"...","size":"...","country_iso2":"...","triggers":["...","...","..."],"background":"...","summary":"..."}
+
+Rules:
+- industry_en: closest match from: B2B SaaS, Enterprise Software, Consumer Apps, Fintech, Banking, Insurance, Cybersecurity, AI & Machine Learning, Data & Analytics, Cloud & Hosting, IT Services & Consulting, Healthtech & Digital Health, Pharmaceuticals, Edtech, HR & Recruiting, Marketing & Creative Agencies, Retail, E-commerce, Manufacturing, Logistics & Supply Chain, Real Estate, Construction, Automotive, Energy, Telecommunications, Legal Services, Management Consulting, or any other from a standard B2B industry list.
+- size: one of "1-10","11-50","51-200","201-500","501-1000","1001-5000","5000+"
+- country_iso2: two-letter ISO code
+- triggers: 3-5 bullet points, each under 20 words, specific and dated where possible
+- background: 1-2 sentences about the person's career path and expertise
+- summary: 2-3 sentences contextualizing the person AND their company for a cold call, in ${({en:'English',it:'Italian',es:'Spanish',fr:'French',de:'German'})[lang]}
+- If you can't find reliable info for a field, use "unknown"`;
+
+  try{
+    const res=await fetch(API_KEY?'https://api.anthropic.com/v1/messages':'/.netlify/functions/proxy',{
+      method:'POST',
+      headers:API_KEY?{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:900,
+        tools:[{type:'web_search_20250305',name:'web_search',max_uses:5}],
+        messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json().catch(()=>null);
+    if(!res.ok||!data)throw new Error('HTTP '+res.status);
+
+    // extract text blocks
+    const raw=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+    const jsonStr=raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1);
+    const j=JSON.parse(jsonStr);
+
+    // If nothing found, show helpful message and stop
+    if((!j.name||j.name==='unknown')&&(!j.title||j.title==='unknown')){
+      const noData={en:'Could not find this profile publicly. Fill in the fields manually — or try a different LinkedIn URL.',it:'Non ho trovato questo profilo pubblicamente. Compila i campi a mano — o prova un altro URL LinkedIn.',es:'No se encontró este perfil públicamente. Completa los campos manualmente — o prueba otra URL de LinkedIn.',fr:'Profil introuvable publiquement. Remplissez les champs manuellement — ou essayez une autre URL LinkedIn.',de:'Profil nicht öffentlich gefunden. Fülle die Felder manuell aus — oder probiere eine andere LinkedIn-URL.'};
+      $('insBody').innerHTML='<p style="color:var(--mut)">'+noData[lang]+'</p>';
+      $('insights').style.display='block';
+      return;
+    }
+    // auto-fill fields
+    if(j.title&&j.title!=='unknown') $('persona').value=j.title;
+    if(j.triggers&&j.triggers.length) $('trigger').value=j.triggers.join(' · ');
+    if(j.country_iso2&&j.country_iso2!=='unknown'){
+      const sel=$('country');
+      const cc=j.country_iso2.toUpperCase();
+      if([...sel.options].some(o=>o.value===cc)) sel.value=cc;
+    }
+    // match industry
+    if(j.industry_en&&j.industry_en!=='unknown'){
+      const ind=j.industry_en.toLowerCase();
+      const sel=$('industry');
+      for(const o of sel.options){if(o.textContent.toLowerCase()===ind){sel.value=o.value;break;}}
+    }
+    // match size
+    if(j.size&&j.size!=='unknown'){
+      const sizeMap={'1-10':0,'11-50':1,'51-200':2,'201-500':3,'501-1000':4,'501-1,000':4,'1001-5000':5,'1,001-5,000':5,'5000+':6,'5,000+':6};
+      const idx=sizeMap[j.size.replace(/,/g,'').replace(/ /g,'')];
+      if(idx!==undefined)$('size').value=String(idx);
+    }
+
+    // show insights
+    let html='';
+    if(j.name) html+='<strong>'+j.name+'</strong>';
+    if(j.title&&j.title!=='unknown') html+=' · '+j.title;
+    if(j.company&&j.company!=='unknown') html+=' @ '+j.company;
+    if(html) html+='<br>';
+    if(j.background&&j.background!=='unknown') html+='<p style="margin:8px 0 0;font-size:12.5px;color:var(--mut);font-style:italic">'+j.background+'</p>';
+    if(j.summary) html+='<p style="margin:8px 0 0">'+j.summary+'</p>';
+    if(j.triggers&&j.triggers.length) html+='<p style="margin:10px 0 0;font-family:var(--mono);font-size:12px;color:var(--ink2)">'+j.triggers.map(t=>'⚡ '+t).join('<br>')+'</p>';
+    if(html){$('insBody').innerHTML=html;$('insights').style.display='block';}
+    researchData=j;
+
+  }catch(e){
+    console.error(e);
+    $('errbox').textContent='Research failed — '+(e.message||'unknown error');
+    $('errbox').style.display='block';
+  }finally{
+    researching=false; btn.disabled=false; btn.classList.remove('busy'); $('resLbl').textContent=T[lang].li_btn;
+  }
+}
+$('researchBtn').onclick=doResearch;
+$('liUrl').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doResearch();}});
+
+
+/* =================== WEBSITE RESEARCH =================== */
+let webBusy=false;
+async function doWebsiteResearch(){
+  if(webBusy)return;
+  const t=T[lang], url=$('website').value.trim();
+  if(!url||!url.includes('.')){return;}
+
+  webBusy=true;
+  const btn=$('websiteBtn'); btn.disabled=true; btn.classList.add('busy'); $('webLbl').textContent=t.webBusy;
+
+  const prompt=`Read this company website and write a concise 2-3 sentence description of what they sell, who they sell it to, and what their key value proposition is. Write it in ${LANGNAME[lang]} as if an SDR is about to use it for a cold call. Be specific — mention the product category, target customer, and the main outcome they promise. Website: ${url}
+
+Respond with ONLY the description text, no preamble, no quotes, no JSON.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:400,
+        tools:[{type:'web_search_20250305',name:'web_search',max_uses:3}],
+        tool_choice:{type:'any'},
+        messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json().catch(()=>null);
+    if(!res.ok||!data)throw new Error('HTTP '+res.status);
+    // Extract text from both text blocks and tool results
+    let txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('').trim();
+    // Remove "I don't have" or similar preambles
+    txt=txt.replace(/^[^.!?]*(?:don't|cannot|can't|unable)[^.!?]*[.!?]\s*/i,'').trim();
+    if(txt) $('offer').value=txt;
+  }catch(e){console.error(e);}
+  finally{
+    webBusy=false; btn.disabled=false; btn.classList.remove('busy'); $('webLbl').textContent=T[lang].webLbl;
+  }
+}
+$('websiteBtn').onclick=doWebsiteResearch;
+$('website').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doWebsiteResearch();}});
+
+/* =================== TIPS =================== */
+const TIPS=[
+{n:{en:'Pattern Interrupt',it:'Pattern Interrupt',es:'Rompe el patrón',fr:'Rupture de schéma',de:'Muster-Unterbrechung'},
+ t:{en:'Acknowledge the cold call upfront',it:'Ammetti subito che è una cold call',es:'Admite que es una llamada en frío',fr:'Admettez que c\'est un appel à froid',de:'Gib sofort zu, dass es ein Cold Call ist'},
+ d:{en:'"I know you weren\'t expecting this call" beats "How are you today?" — it shows self-awareness, builds trust, and earns you 30 more seconds.',it:'"So che non si aspettava questa chiamata" batte "Come sta oggi?" — mostra consapevolezza, costruisce fiducia e ti guadagna 30 secondi in più.',es:'"Sé que no esperaba esta llamada" supera a "¿Cómo está?" — muestra autoconciencia, genera confianza y te gana 30 segundos más.',fr:'"Je sais que vous ne vous attendiez pas à cet appel" surpasse "Comment allez-vous ?" — ça montre de la lucidité et vous gagne 30 secondes.',de:'"Ich weiß, Sie haben diesen Anruf nicht erwartet" schlägt "Wie geht es Ihnen?" — zeigt Selbstbewusstsein und bringt dir 30 Sekunden mehr.'},
+ s:'Gong.io · SalesHive'},
+{n:{en:'Reason for calling',it:'Motivo della chiamata',es:'Motivo de la llamada',fr:'Raison de l\'appel',de:'Anrufgrund nennen'},
+ t:{en:'Lead with your reason, not your product',it:'Parti dal motivo, non dal prodotto',es:'Empieza con el motivo, no con el producto',fr:'Commencez par la raison, pas le produit',de:'Starte mit dem Grund, nicht mit dem Produkt'},
+ d:{en:'State why you\'re calling in the first 10 seconds. Calls where the reason was given upfront had 2.1x higher success rate.',it:'Dichiara perché chiami nei primi 10 secondi. Le chiamate con il motivo dato subito hanno un tasso di successo 2.1 volte superiore.',es:'Di por qué llamas en los primeros 10 segundos. Las llamadas donde se dio el motivo tuvieron 2.1x más éxito.',fr:'Dites pourquoi vous appelez dans les 10 premières secondes. Les appels où la raison était donnée avaient 2,1x plus de succès.',de:'Nenne in den ersten 10 Sekunden warum du anrufst. Anrufe mit sofortigem Grund hatten 2,1x höhere Erfolgsquote.'},
+ s:'Gong.io'},
+{n:{en:'Trigger-based opener',it:'Opener basato su trigger',es:'Opener basado en trigger',fr:'Opener basé sur un trigger',de:'Trigger-basierter Opener'},
+ t:{en:'Reference something that just happened',it:'Fai riferimento a qualcosa appena successo',es:'Haz referencia a algo que acaba de pasar',fr:'Faites référence à un événement récent',de:'Bezieh dich auf etwas, das gerade passiert ist'},
+ d:{en:'Funding, hiring spikes, leadership changes, product launches — a specific trigger shows research and creates urgency. It\'s the difference between "why me" and "why now."',it:'Funding, ondata di assunzioni, cambio leadership, lancio prodotto — un trigger specifico mostra ricerca e crea urgenza. È la differenza tra "perché io" e "perché adesso."',es:'Funding, picos de contratación, cambios de liderazgo, lanzamientos — un trigger específico demuestra investigación y crea urgencia.',fr:'Levée de fonds, recrutements massifs, changement de direction — un trigger montre que vous avez fait vos recherches et crée l\'urgence.',de:'Funding, Hiring-Welle, Führungswechsel — ein konkreter Trigger zeigt Recherche und erzeugt Dringlichkeit.'},
+ s:'Crono Playbook'},
+{n:{en:'Micro-permission',it:'Micro-permesso',es:'Micro-permiso',fr:'Micro-permission',de:'Micro-Erlaubnis'},
+ t:{en:'Ask for 30 seconds, not 30 minutes',it:'Chiedi 30 secondi, non 30 minuti',es:'Pide 30 segundos, no 30 minutos',fr:'Demandez 30 secondes, pas 30 minutes',de:'Bitte um 30 Sekunden, nicht 30 Minuten'},
+ d:{en:'"Can I get 30 seconds to tell you why I\'m calling, and if it\'s not relevant you can hang up?" — low commitment = low resistance. Top SDRs use micro-permission to cut objections by 40%.',it:'"Posso avere 30 secondi per dirle perché chiamo? Se non è rilevante può riattaccare." — basso impegno = bassa resistenza. I migliori SDR usano il micro-permesso per tagliare le obiezioni del 40%.',es:'"¿Me da 30 segundos para decirle por qué llamo? Si no le interesa, puede colgar." — bajo compromiso = baja resistencia.',fr:'"Puis-je avoir 30 secondes pour vous dire pourquoi j\'appelle ? Si ça ne vous concerne pas, vous pouvez raccrocher." — faible engagement = faible résistance.',de:'"Darf ich 30 Sekunden haben um zu sagen warum ich anrufe? Wenn es nicht relevant ist, können Sie auflegen." — wenig Commitment = wenig Widerstand.'},
+ s:'SalesHive · Cognism'},
+{n:{en:'Sell the problem',it:'Vendi il problema',es:'Vende el problema',fr:'Vendez le problème',de:'Verkaufe das Problem'},
+ t:{en:'Never pitch the product in the opener',it:'Mai pitchare il prodotto nell\'opener',es:'Nunca presentes el producto en el opener',fr:'Ne pitchez jamais le produit dans l\'opener',de:'Nie das Produkt im Opener pitchen'},
+ d:{en:'"Teams like yours lose 11h/week per SDR on manual prospecting" hits harder than "We\'re an AI-powered sales platform." Lead with pain, not features.',it:'"Team come il vostro perdono 11h/settimana per SDR in prospecting manuale" colpisce più di "Siamo una piattaforma AI per le vendite." Parti dal dolore, non dalle feature.',es:'"Equipos como el suyo pierden 11h/semana por SDR en prospecting manual" impacta más que "Somos una plataforma de IA para ventas."',fr:'"Les équipes comme la vôtre perdent 11h/semaine par SDR en prospection manuelle" frappe plus fort que "Nous sommes une plateforme IA."',de:'"Teams wie Ihres verlieren 11h/Woche pro SDR mit manuellem Prospecting" trifft härter als "Wir sind eine KI-Sales-Plattform."'},
+ s:'Crono Playbook · Gong.io'},
+{n:{en:'Full name = authority',it:'Nome completo = autorità',es:'Nombre completo = autoridad',fr:'Nom complet = autorité',de:'Voller Name = Autorität'},
+ t:{en:'State your full name and company',it:'Di nome, cognome e azienda',es:'Di tu nombre completo y empresa',fr:'Dites vos nom complet et entreprise',de:'Nenne deinen vollen Namen und Firma'},
+ d:{en:'Gong analyzed 90K+ cold calls: reps who introduced themselves with full name and company earned more talk time. It signals confidence and commands respect.',it:'Gong ha analizzato 90K+ cold call: i rep che si presentavano con nome completo e azienda ottenevano più tempo. Segnala sicurezza e guadagna rispetto.',es:'Gong analizó más de 90K llamadas: los reps que se presentaban con nombre completo y empresa obtenían más tiempo.',fr:'Gong a analysé plus de 90K appels : les reps qui se présentaient avec nom complet et entreprise obtenaient plus de temps.',de:'Gong analysierte 90K+ Calls: Reps die sich mit vollem Namen und Firma vorstellten, bekamen mehr Gesprächszeit.'},
+ s:'Gong.io'},
+{n:{en:'Single CTA',it:'CTA singola',es:'CTA única',fr:'CTA unique',de:'Einzelner CTA'},
+ t:{en:'One ask, low friction, end of opener',it:'Una richiesta, bassa frizione, fine dell\'opener',es:'Una petición, baja fricción, al final del opener',fr:'Une demande, peu de friction, fin de l\'opener',de:'Eine Bitte, wenig Reibung, Ende des Openers'},
+ d:{en:'Don\'t ask for a demo in the opener. Ask for 2 minutes, or a quick question, or to share one insight. The meeting comes later.',it:'Non chiedere una demo nell\'opener. Chiedi 2 minuti, o una domanda veloce, o di condividere un insight. Il meeting viene dopo.',es:'No pidas una demo en el opener. Pide 2 minutos, o una pregunta rápida. La reunión viene después.',fr:'Ne demandez pas de démo dans l\'opener. Demandez 2 minutes ou de partager un insight. Le rendez-vous viendra après.',de:'Frag nicht nach einer Demo im Opener. Frag nach 2 Minuten oder einer kurzen Frage. Das Meeting kommt später.'},
+ s:'Cognism · Crono Playbook'},
+{n:{en:'Multi-threading',it:'Multi-threading',es:'Multi-threading',fr:'Multi-threading',de:'Multi-Threading'},
+ t:{en:'Name-drop a colleague to anchor trust',it:'Cita un collega per ancorare la fiducia',es:'Menciona a un colega para anclar confianza',fr:'Mentionnez un collègue pour ancrer la confiance',de:'Nenne einen Kollegen um Vertrauen aufzubauen'},
+ d:{en:'"I was chatting with [colleague] about X and they mentioned you\'d be the right person" — referencing an internal contact boosts win rate 6x with 5+ stakeholders engaged.',it:'"Parlavo con [collega] di X e mi ha detto che lei sarebbe la persona giusta" — citare un contatto interno moltiplica il win rate 6x con 5+ stakeholder coinvolti.',es:'"Hablaba con [colega] sobre X y me dijo que usted sería la persona indicada" — mencionar un contacto interno multiplica el win rate.',fr:'"Je discutais avec [collègue] de X et il m\'a dit que vous seriez la bonne personne" — mentionner un contact interne booste le win rate.',de:'"Ich habe mit [Kollege] über X gesprochen und er meinte, Sie wären die richtige Person" — ein interner Kontakt steigert die Win Rate.'},
+ s:'Crono Playbook'}
+];
+function renderTips(){
+  const t=T[lang], li=LANGS.indexOf(lang), el=$('tipsList');
+  $('t_tips').textContent={en:'\u{1F4D6} Cold Calling Playbook — 8 rules for your opener',it:'\u{1F4D6} Cold Calling Playbook — 8 regole per il tuo opener',es:'\u{1F4D6} Cold Calling Playbook — 8 reglas para tu opener',fr:'\u{1F4D6} Cold Calling Playbook — 8 règles pour votre opener',de:'\u{1F4D6} Cold Calling Playbook — 8 Regeln für deinen Opener'}[lang];
+  el.innerHTML=TIPS.map((tip,i)=>'<div class="tip"><div class="tn">#'+(i+1)+' '+tip.n[lang]+'</div><div class="tt">'+tip.t[lang]+'</div><div class="td">'+tip.d[lang]+'</div><div class="tsrc">'+tip.s+'</div></div>').join('');
+}
+
+
+/* =================== BUILD OPENERS =================== */
+
+function escHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+async function buildOpeners(){
+  if(busy)return;
+  const t=T[lang], offer=$('offer').value.trim(), persona=$('persona').value.trim();
+  $('warn').style.display='none'; $('errbox').style.display='none';
+  if(!offer||!persona){$('warn').textContent=t.warnBuild;$('warn').style.display='block';return;}
+
+  busy=true;
+  const btn=$('buildBtn'); btn.disabled=true; btn.classList.add('busy'); $('buildLbl').textContent=t.building;
+
+  const trigger=$('trigger').value.trim()||'none specified';
+  const prospectName=researchData&&researchData.name?researchData.name:'unknown';
+  const prospectCompany=researchData&&researchData.company?researchData.company:'unknown';
+  const prospectBg=researchData&&researchData.background?researchData.background:'';
+
+  const [si,ii]=$('industry').value.split('.').map(Number);
+  const industryEn=SECTORS[si].i[ii][0];
+  const sizeTxt=SIZES[Number($('size').value)]+' employees';
+  const cc=$('country').value;
+  let countryEn='unspecified';
+  if(cc){try{countryEn=new Intl.DisplayNames(['en'],{type:'region'}).of(cc);}catch(e){countryEn=cc;}}
+  const ctEn=['a first-touch cold call (no prior contact whatsoever)','a follow-up call (there was one previous brief interaction)','a call placed shortly after a cold email was sent'][callType];
+
+  const prompt=`You are a world-class B2B cold call opener builder. Your job: create 3 perfect, ready-to-use cold call openers for an SDR.
+
+LANGUAGE: Write ALL output in ${LANGNAME[lang]}. Every string in the JSON MUST be in ${LANGNAME[lang]}.
+
+CONTEXT
+- Seller's offer: ${offer}
+- Prospect's FULL NAME: ${prospectName}
+- Prospect persona/title: ${persona}
+- Prospect's company NAME: ${prospectCompany}
+- Prospect background: ${prospectBg||'not available'}
+- Company industry: ${industryEn}, ${sizeTxt}, based in ${countryEn}
+- Call type: ${ctEn}
+- Trigger / reason for calling NOW: ${trigger}
+
+Respond with ONLY a minified JSON object, no markdown, no fences:
+{"openers":[{"opener":"...","technique":"...","why":"..."},{"opener":"...","technique":"...","why":"..."},{"opener":"...","technique":"...","why":"..."}]}
+
+RULES FOR EACH OPENER:
+- opener: A COMPLETE, READY-TO-USE opener an SDR can read VERBATIM on the phone. From greeting to CTA. 30-50 words.
+- Choose the greeting based on SENIORITY and CULTURE:
+  * C-level/VP/Director (formal): IT="Buongiorno [cognome]", ES="Buenos días [apellido]", FR="Bonjour [nom]", DE="Guten Tag [Nachname]", EN="Good morning/afternoon [last name]"
+  * Manager/Head of (semi-formal): IT="Buongiorno [nome]", ES="Buenos días [nombre]", FR="Bonjour [prénom]", DE="Guten Tag [Vorname]", EN="Hi [first name]"
+  * SDR/IC/junior (informal): IT="Ciao [nome]", ES="Hola [nombre]", FR="Salut [prénom]", DE="Hi [Vorname]", EN="Hey [first name]"
+  Prospect name: "${prospectName}", title: "${persona}". Pick the right register.
+- Include the SDR self-intro: "this is [your name] from [company]" using a placeholder [your name] and extracting the company from the offer.
+- Must sound like a real human talking on the phone. Contractions, natural rhythm.
+- CRITICAL: Write the ENTIRE opener in ${LANGNAME[lang]}.
+
+- technique: A 2-4 word label for the technique used (e.g. "Trigger-based", "Name-drop referral", "Permission-based", "Problem hypothesis", "Pattern interrupt", "Mutual connection")
+
+- why: A DETAILED explanation (4-6 sentences) of WHY this opener works. Cover:
+  * The psychological mechanism behind the technique
+  * Why it works specifically for this persona/seniority level
+  * What reaction it's designed to provoke in the prospect
+  * How it connects to the trigger or context
+  * What the SDR should do if the prospect responds positively
+  Write this in ${LANGNAME[lang]}.
+
+EACH OPENER MUST USE A DIFFERENT TECHNIQUE. Always include:
+(a) ONE name-drop/referral: "I was talking to someone from your [dept] about X and they suggested I reach out to you" — use a realistic department from ${prospectCompany}
+(b) ONE trigger-based: reference a SPECIFIC trigger: "${trigger}"
+(c) ONE of: permission-based, problem hypothesis, or pattern interrupt`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json().catch(()=>null);
+    if(!res.ok||!data||data.error)throw new Error((data&&data.error&&(data.error.message||data.error.type))||('HTTP '+res.status));
+
+    const raw=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+    const jsonStr=raw.slice(raw.indexOf('{'),raw.lastIndexOf('}')+1);
+    const j=JSON.parse(jsonStr);
+
+    renderOpeners(j.openers||[]);
+  }catch(e){
+    console.error(e);
+    const isFetchFail=e&&e.message&&/fetch|network|cors/i.test(e.message);
+    const outsideMsg={en:"API key missing or invalid. Open the HTML, find PASTE_YOUR_KEY_HERE and replace with your Anthropic key.",it:"API key mancante o non valida. Apri l'HTML, cerca PASTE_YOUR_KEY_HERE e sostituisci con la tua key Anthropic.",es:"API key faltante o invalida. Abre el HTML, busca PASTE_YOUR_KEY_HERE y reemplaza con tu key de Anthropic.",fr:"Cle API manquante ou invalide. Ouvrez le HTML, cherchez PASTE_YOUR_KEY_HERE et remplacez avec votre cle Anthropic.",de:"API-Key fehlt oder ungueltig. Oeffne das HTML, suche PASTE_YOUR_KEY_HERE und ersetze mit deinem Anthropic-Key."};
+    $('errbox').textContent=(isFetchFail||!API_KEY||API_KEY==='PASTE_YOUR_KEY_HERE')?outsideMsg[lang]:T[lang].err+(e&&e.message?' \u2014 '+e.message:'');
+    $('errbox').style.display='block';
+  }finally{
+    busy=false; btn.disabled=false; btn.classList.remove('busy'); $('buildLbl').textContent=T[lang].buildLbl;
+  }
+}
+
+function renderOpeners(openers){
+  const t=T[lang];
+  const el=$('openersList');
+  el.innerHTML=openers.map((o,i)=>`
+    <div class="opener-card">
+      <div class="opener-num">
+        <span>${t.openerNum} ${i+1}</span>
+        <span class="opener-technique">${escHtml(o.technique||'')}</span>
+      </div>
+      <div class="opener-text">"${escHtml(o.opener||'')}"</div>
+      <div class="opener-why-label">${t.whyLabel}</div>
+      <div class="opener-why">${escHtml(o.why||'')}</div>
+      <button class="copy-btn" data-text="${escHtml(o.opener||'')}">
+        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        <span>${t.copyTxt}</span>
+      </button>
+    </div>
+  `).join('');
+
+  // Wire copy buttons
+  el.querySelectorAll('.copy-btn').forEach(btn=>{
+    btn.onclick=()=>{
+      navigator.clipboard.writeText(btn.getAttribute('data-text')).then(()=>{
+        btn.classList.add('copied');
+        btn.querySelector('span').textContent=T[lang].copiedTxt;
+        setTimeout(()=>{btn.classList.remove('copied');btn.querySelector('span').textContent=T[lang].copyTxt;},2000);
+      }).catch(()=>{});
+    };
+  });
+
+  $('openersResult').style.display='block';
+  $('openersResult').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* =================== INIT =================== */
+$('buildBtn').onclick=buildOpeners;
+applyLang();
+</script>
+</body>
+</html>
